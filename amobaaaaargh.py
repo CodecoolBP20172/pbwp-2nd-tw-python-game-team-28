@@ -1,11 +1,10 @@
 import os
 import random
+import time
 
 EMPTY_BOARD = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 red = '\033[31mO\033[0m'
 blue = '\033[94mX\033[0m'
-first = ""
-second = ""
 player_list = {}
 
 def draw_board(board):
@@ -24,6 +23,10 @@ def draw_board(board):
 
 
 def player_move(board, player, index):
+    print(board)
+    print(player)
+    print(index)
+    time.sleep(1)
     board[index] = player
     return board
 
@@ -71,23 +74,21 @@ def add_player(player_list, name):
         player_list[name] = 0
 
 def player_selection(red, blue):
+    global player_list
     first_player = input("Enter player who will be " + blue + ": ")
-    add_player(player_list, first)
+    add_player(player_list, first_player)
     print(blue + " is " + first_player + "!")
     second_player = input("Enter player who will be " + red + ": ")
-    second.insert(0, second_player)
-    add_player(player_list, second)
+    add_player(player_list, second_player)
     print(red + " is " + second_player + "!")
-    players = {blue : first_player, red : second_player}
-    return random.choice(list(players.keys()))
+    #player_list = {first_player, red : second_player}
+    return blue
 
-def win_count(player_list, colour):
+def win_count(player_list, colour, first_player, second_player):
     if colour == blue:
-        if blue in player_list:
-            player_list[first] += 1
-        elif colour == red:
-            if red in player_list:
-                player_list[second] += 1
+        player_list[first_player] += 1
+    elif colour == red:
+        player_list[second_player] += 1
 
 def start_game():
     board = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
@@ -103,6 +104,9 @@ def one_player():
 
 def two_players():
     act_player = player_selection(red, blue)
+    print("------")
+    print(act_player)
+    time.sleep(1)
     os.system("clear")
     print(act_player + " \033[1;36mstarts!\033[0m")
     print()
@@ -119,19 +123,17 @@ def two_players():
             os.system('clear')  
             if winning(board, act_player):
                 if act_player == red:
-                    win_count(player_list, red)
+                    win_count(player_list, red, first_player, second_player)
                 elif act_player == blue:
-                    win_count(player_list, blue)
+                    win_count(player_list, blue, first_player, second_player)
                 print("\033[1;33mCongratulations " + act_player + "\033[1;33m, you won.\033[0m \033[1;30mNow go outside.\033[0m")
                 print()
-                print("The scores are: " + ''.join(second) + ":" + " " + str(player_list) + " and " + ''.join(first) + ":" + " " + str(player_list) + ".")
-                first.clear()
-                second.clear()
+                print("The scores are: ")
+                for name, score in player_list.items():
+                    print(str(name) + ": " + str(score))
                 game_on = False
             elif board_full(board) == True:
                 print("\033[1;35mBored, huh?...\033[0m")
-                first.clear()
-                second.clear()
                 game_on = False
             else:
                 game_on = True

@@ -2,6 +2,8 @@ import os
 import random
 
 EMPTY_BOARD = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+red = '\033[31mO\033[0m'
+blue = '\033[94mX\033[0m'
 
 def draw_board(board):
     print('      |     |      ')
@@ -17,8 +19,7 @@ def draw_board(board):
     print('      |     |      ')
     print()
 
-red = '\033[31mO\033[0m'
-blue = '\033[94mX\033[0m'
+
 
 def player_move(board, player, index):
     board[index] = player
