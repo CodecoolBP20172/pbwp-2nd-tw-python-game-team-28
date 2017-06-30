@@ -114,20 +114,18 @@ def one_player():
     while game_on:
         
         try:
+            os.system("clear")
             draw_board(board)
             userinput = get_input_from_user(board)
             board = player_move(board, act_player, userinput) 
             draw_board(board)
-            #os.system('clear')
-            print(act_player + ai)
-            draw_board(board)
+            os.system('clear')
             time.sleep(0.5)
+            draw_board(board)
             n = ai_input(board)
             board = ai_move(board, ai, n)
             draw_board(board)
-            #os.system("clear")
-            print(act_player + ai)
-            #time.sleep(0.5)
+            os.system("clear")
             if board_full(board) == True:
                 print("\033[1;35mBored, huh?...\033[0m")
                 game_on = False
@@ -141,8 +139,8 @@ def one_player():
             else:
                 game_on = True
 
-            #if act_player == blue:
-                #ai = red
+            if act_player == blue:
+                ai = red
 
         except KeyboardInterrupt:
             print("\033[1;31mAlright, where's the fire? Exiting...\033[0m")    
@@ -194,23 +192,26 @@ def main():
     try:
         os.system("clear")
         start_game()
-        if True:
+        while True:
+            start_game()
             while True:
-               # one_player()
-                while True:
-                    answer = input('Run again? (y/n): ')
-                    if answer in ('y', 'n'):
-                        break
-                    print('Invalid input.')
-                if answer == 'y':
-                    continue
-                else:
-                    print('Goodbye')
+                answer = input('Waste more time? (y/n): ')
+                if answer in ('y', 'n'):
                     break
-       # elif False:
-        #    two_player()
+                print('Sigh....')
+            if answer == 'y':
+                continue
+            else:
+                print('Do something productive...')
+                time.sleep(1)
+                os.system("clear")
+                break
+    # elif False:
+    #    two_player()
     except KeyboardInterrupt:
         print("I guess you have more important things to do huh...")
+        time.sleep(1)
+        os.system("clear")
         exit()
 
 #This is the game right here:
