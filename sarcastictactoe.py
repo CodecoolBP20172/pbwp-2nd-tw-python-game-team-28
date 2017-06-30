@@ -34,7 +34,8 @@ def ai_input(board):
                     continue
                 else:
                     print(n)
-                    return n    
+                    return n   
+    
 
 def ai_move(board, ai, index):
     board[index] = ai
@@ -98,9 +99,9 @@ def start_game():
     print()
     answer = input("Would you like to play against the computer? Yes or No: ")
     if answer == "No":
-        return True
+        return two_players()
     elif answer == "Yes":
-        return False
+        return one_player()
 
 def one_player():
     act_player = blue
@@ -127,22 +128,21 @@ def one_player():
             #os.system("clear")
             print(act_player + ai)
             #time.sleep(0.5)
-            if winning(board, act_player):
-                if act_player == blue:
-                    print("\033[1;33mCongratulations " + act_player + "\033[1;33m, you won.\033[0m \033[1;30mNow go outside.\033[0m")
-                    print()
-                    game_on = False
-                else:
-                    print("Beaten... lol..")
-                    game_on = False
-            elif board_full(board) == True:
+            if board_full(board) == True:
                 print("\033[1;35mBored, huh?...\033[0m")
+                game_on = False
+            elif winning(board, ai):
+                print("Beaten... lol..")
+                game_on = False
+            elif winning(board, act_player):
+                print("\033[1;33mCongratulations " + act_player + "\033[1;33m, you won.\033[0m \033[1;30mNow go outside.\033[0m")
+                print()
                 game_on = False
             else:
                 game_on = True
 
-            if act_player == blue:
-                ai = red
+            #if act_player == blue:
+                #ai = red
 
         except KeyboardInterrupt:
             print("\033[1;31mAlright, where's the fire? Exiting...\033[0m")    
@@ -196,7 +196,7 @@ def main():
         start_game()
         if True:
             while True:
-                one_player()
+               # one_player()
                 while True:
                     answer = input('Run again? (y/n): ')
                     if answer in ('y', 'n'):
@@ -207,8 +207,8 @@ def main():
                 else:
                     print('Goodbye')
                     break
-        else:
-            one_player()
+       # elif False:
+        #    two_player()
     except KeyboardInterrupt:
         print("I guess you have more important things to do huh...")
         exit()
